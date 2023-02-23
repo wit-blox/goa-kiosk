@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node server.js",
-		"con": "concurrently \"npm run dev\" \"cd client && yarn dev --port 3000\"",
+		"con": "concurrently \"npm run dev\" \"cd client && npm run dev -- --port 3000\"",
 		"dev": "nodemon server.js"
 	},
 	"keywords": [],
@@ -18,6 +18,7 @@
 		"ejs": "^3.1.8",
 		"express": "^4.18.2",
 		"multer": "^1.4.5-lts.1",
+		"nodemon": "^2.0.20",
 		"serialport": "^10.5.0",
 		"socket.io": "^4.6.0"
 	}
