@@ -82,8 +82,6 @@ app.get("/api/init", async (req, res) => {
 		if (measurement === lastMeasurement) return;
 		lastMeasurement = measurement;
 
-		// console.log(configs);
-
 		const found = configs.configs.find(
 			(config) =>
 				parseFloat(config.min) <= measurement &&
@@ -92,12 +90,12 @@ app.get("/api/init", async (req, res) => {
 		if (!found) return;
 		if (found.id === lastVideoId) return;
 		lastVideoId = found.id;
-		console.log("found", measurement, "->", found);
-		io.emit("measurement", measurement);
+		// console.log("found", measurement, "->", found);
+		io.emit("measurement", { ...found, measurement });
 	});
 
-	res.json({ msg: "success" });
-	// res.sendFile(path.join(__dirname, "client/dist", "index.html"));
+	const newConfigs = await fs.readFile("./config.json");
+	res.json({ msg: "success", data: JSON.parse(newConfigs) });
 });
 
 app.get("/api/configs", async (req, res) => {

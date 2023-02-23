@@ -1,13 +1,14 @@
-import axios from 'axios'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import axios from "axios";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { API_URL } from "./configs";
+import "./index.css";
 
-axios.defaults.baseURL = 'http://localhost:3001'
+axios.defaults.baseURL = API_URL;
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+ReactDOM.createRoot(document.getElementById("root")).render(
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>
+);

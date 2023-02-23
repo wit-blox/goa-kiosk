@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { API_URL } from "../configs";
 
 const App = () => {
 	const [configs, setConfigs] = useState([]);
@@ -140,7 +141,7 @@ const App = () => {
 
 										{config.video && (
 											<a
-												href={`http://localhost:3001/api/upload/${config.video}`}
+												href={`${API_URL}/api/upload/${config.video}`}
 												target="_blank"
 												rel="noreferrer"
 												className="underline text-blue-600 hover:text-blue-500 mx-2"
