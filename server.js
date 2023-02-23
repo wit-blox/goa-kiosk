@@ -10,13 +10,19 @@ const path = require("path");
 const fs = require("fs").promises;
 const cors = require("cors");
 const multer = require("multer");
+const { JsonDB, Config } = require("node-json-db");
 
 const PORT = 3001;
 
+// JsonDB setup
+const db = new JsonDB(new Config("configuration-db", true, false, "/"));
+
+// Middlewares
 app.use(express.json());
 app.use(express.static("uploads"));
 app.use(cors());
 
+// Multer setup
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		cb(null, "uploads/");
@@ -69,20 +75,19 @@ app.get("/api/init", async (req, res) => {
 		return res.status(401).json({ msg: "error", data: isConnected.msg });
 	}
 
-	const configBuff = await fs.readFile("./config.json");
-	const configs = JSON.parse(configBuff);
+	const configurations = await db.getData("/configs");
 
 	port.on("open", () => {
 		console.log("serial port open");
 	});
 
 	parser.on("data", (data) => {
-		// console.log("data -> ", data);
+		console.log("data -> ", data);
 		const measurement = data.split(" ")[0];
 		if (measurement === lastMeasurement) return;
 		lastMeasurement = measurement;
 
-		const found = configs.configs.find(
+		const found = configurations.find(
 			(config) =>
 				parseFloat(config.min) <= measurement &&
 				parseFloat(config.max) >= measurement
@@ -94,21 +99,22 @@ app.get("/api/init", async (req, res) => {
 		io.emit("measurement", { ...found, measurement });
 	});
 
-	const newConfigs = await fs.readFile("./config.json");
-	res.json({ msg: "success", data: JSON.parse(newConfigs) });
+	res.json({ msg: "success", data: configurations });
 });
 
 app.get("/api/configs", async (req, res) => {
-	const newConfigs = await fs.readFile("./config.json");
-	res.json({ msg: "success", data: JSON.parse(newConfigs) });
+	try {
+		const configurations = await db.getData("/configs");
+		res.json({ msg: "success", data: configurations });
+	} catch (error) {
+		res.json({ msg: "error", data: error.message });
+	}
 });
 
 app.patch("/api/configs", async (req, res) => {
-	const newConfigs = req.body.configs;
-	fs.writeFile(
-		"./config.json",
-		JSON.stringify({ configs: newConfigs }, null, 2)
-	);
+	const configs = req.body.configs;
+
+	const newConfigs = await db.push("/configs", configs, true);
 	res.json({ msg: "success", data: newConfigs });
 });
 

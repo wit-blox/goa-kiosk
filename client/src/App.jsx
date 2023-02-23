@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
+import SerialRead from "./pages/SerialRead";
 
 const router = createBrowserRouter([
 	{
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
 	{
 		path: "/dashboard",
 		element: <Dashboard />,
+	},
+	{
+		path: "/serial_read",
+		element: <SerialRead />,
 	},
 ]);
 

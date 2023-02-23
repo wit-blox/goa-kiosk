@@ -11,8 +11,7 @@ const App = () => {
 			const { data } = await axios.get("/api/configs");
 
 			if (data.msg !== "success") return;
-
-			setConfigs(data.data.configs);
+			setConfigs(data.data);
 		};
 
 		getData();
