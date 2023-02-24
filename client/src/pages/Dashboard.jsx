@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { API_URL } from "../configs";
+import { Link } from "react-router-dom";
 
 const App = () => {
 	const [configs, setConfigs] = useState([]);
@@ -79,14 +80,32 @@ const App = () => {
 
 	return (
 		<>
-			<nav className="py-4 shadow-gray-200 shadow-lg flex justify-center items-center">
+			<nav className="p-4 shadow-gray-200 shadow-lg flex justify-between items-center">
 				<h1>Dashboard</h1>
+
+				<ul className="flex gap-2 text-blue-500 underline">
+					<Link to="/">
+						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
+							Home
+						</li>
+					</Link>
+					<Link to="/dashboard">
+						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
+							Digital Caliper Dashboard
+						</li>
+					</Link>
+					<Link to="/serial-dashboard">
+						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
+							Serial Read Dashboard
+						</li>
+					</Link>
+				</ul>
 			</nav>
 
 			<main className="h-[80vh] p-5 flex justify-center flex-col items-center">
 				<div className="w-full min-w-fit sm:w-4/12 p-5 rounded-lg shadow-gray-300 shadow-2xl">
 					<div className="text-xl font-semibold text-center my-2">
-						<h2>Configurations</h2>
+						<h2>Configurations for Sensors</h2>
 					</div>
 					<div className="max-h-96 overflow-auto">
 						{configs.map((config, idx) => (
@@ -94,14 +113,14 @@ const App = () => {
 								className="border-[1px] border-gray-900/10 rounded-md mx-4 my-4 p-2 relative"
 								key={config.id}
 							>
-								<div>
+								<div className="my-1">
 									<label className="mr-2" htmlFor={`min-${config.id}`}>
 										Min Value for: {idx + 1}
 									</label>
 									<input
 										id={`min-${config.id}`}
 										type="number"
-										className="shadow appearance-none border border-gray-900 rounded py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+										className="shadow appearance-none border border-gray-400 rounded py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
 										value={config.min}
 										onChange={(e) => handleThresholdChange(e, config.id, "min")}
 									/>
@@ -117,7 +136,7 @@ const App = () => {
 									<input
 										id={`max-${config.id}`}
 										type="number"
-										className="shadow appearance-none border border-gray-900 rounded py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+										className="shadow appearance-none border border-gray-400 rounded py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
 										value={config.max}
 										onChange={(e) => handleThresholdChange(e, config.id, "max")}
 									/>
