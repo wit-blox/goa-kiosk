@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import SensorsDashboard from "./pages/SensorsDashboard";
-import SerialRead from "./pages/SerialRead";
 
 const router = createBrowserRouter([
 	{
@@ -17,10 +16,6 @@ const router = createBrowserRouter([
 	{
 		path: "/sensors-dashboard",
 		element: <SensorsDashboard />,
-	},
-	{
-		path: "/serial_read",
-		element: <SerialRead />,
 	},
 ]);
 

@@ -17,8 +17,6 @@ const Home = () => {
 			.then(({ data }) => {
 				if (data.msg !== "success") return setApiError(data.msg);
 
-				console.log(data.data);
-
 				setDefaultVideo(data.data.configs[0].video);
 			})
 			.catch((err) => {
@@ -62,6 +60,12 @@ const Home = () => {
 							{" "}
 							Click here
 						</a>
+					</p>
+					<p>
+						Link for{" "}
+						<Link to="/dashboard" className="text-blue-500">
+							dashboard
+						</Link>
 					</p>
 				</div>
 			)}

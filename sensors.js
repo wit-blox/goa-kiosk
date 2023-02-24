@@ -68,7 +68,6 @@ app.get("/api/init", async (req, res) => {
 		const isConnected = await initArdiuno();
 
 		if (!isConnected.success) {
-			console.log({ data: isConnected.msg });
 			return res.status(401).json({ msg: "error", data: isConnected.msg });
 		}
 
