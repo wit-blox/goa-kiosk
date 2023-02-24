@@ -5,7 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node server.js",
-		"con": "concurrently \"npm run dev\" \"cd client && npm run preview -- --port 3000\"",
+		"caliper-con": "concurrently \"npm run dev\" \"cd client && npm run build && npm run preview -- --port 3000\"",
+		"digital-con": "concurrently \"node digitalRead.js\" \"cd client && npm run build && npm run preview -- --port 3000\"",
 		"dev": "nodemon server.js"
 	},
 	"keywords": [],
