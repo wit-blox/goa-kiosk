@@ -13,7 +13,8 @@ const path = require("path");
 
 const PORT = 3001;
 
-const db = new JsonDB(new Config("digital-configuration-db", true, false, "/"));
+// JsonDB setup
+const db = new JsonDB(new Config("sensors-db", true, false, "/"));
 
 app.use(express.json());
 app.use(cors());
@@ -63,30 +64,35 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/init", async (req, res) => {
-	const isConnected = await initArdiuno();
+	try {
+		const isConnected = await initArdiuno();
 
-	if (!isConnected.success) {
-		return res.status(401).json({ msg: "error", data: isConnected.msg });
-	}
-
-	const configs = await db.getData("/configs");
-
-	port.on("open", () => {
-		console.log("serial port open");
-	});
-
-	parser.on("data", (data) => {
-		if (parseInt(data) > configs.length - 1) return;
-
-		const currData = configs[parseInt(data)];
-		if (lastVideoId !== currData.id) {
-			// console.log(configs[parseInt(data)]);
-			io.emit("digitalRead", { data: currData });
-			lastVideoId = currData.id;
+		if (!isConnected.success) {
+			console.log({ data: isConnected.msg });
+			return res.status(401).json({ msg: "error", data: isConnected.msg });
 		}
-	});
 
-	res.json({ msg: "success", data: { configs } });
+		const configs = await db.getData("/configs");
+
+		port.on("open", () => {
+			console.log("serial port open");
+		});
+
+		parser.on("data", (data) => {
+			if (parseInt(data) > configs.length - 1) return;
+
+			const currData = configs[parseInt(data)];
+			if (lastVideoId !== currData.id) {
+				// console.log(configs[parseInt(data)]);
+				io.emit("digitalRead", { data: currData });
+				lastVideoId = currData.id;
+			}
+		});
+
+		res.json({ msg: "success", data: { configs } });
+	} catch (error) {
+		res.status(401).json({ msg: "error", data: error.message });
+	}
 });
 
 app.get("/api/configs", async (req, res) => {

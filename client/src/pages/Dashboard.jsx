@@ -91,12 +91,12 @@ const App = () => {
 					</Link>
 					<Link to="/dashboard">
 						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
-							Digital Caliper Dashboard
+							Vernier Dashboard
 						</li>
 					</Link>
-					<Link to="/serial-dashboard">
+					<Link to="/sensors-dashboard">
 						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
-							Serial Read Dashboard
+							Sensors Dashboard
 						</li>
 					</Link>
 				</ul>
@@ -105,7 +105,7 @@ const App = () => {
 			<main className="h-[80vh] p-5 flex justify-center flex-col items-center">
 				<div className="w-full min-w-fit sm:w-4/12 p-5 rounded-lg shadow-gray-300 shadow-2xl">
 					<div className="text-xl font-semibold text-center my-2">
-						<h2>Configurations for Sensors</h2>
+						<h2>Configurations for Vernier</h2>
 					</div>
 					<div className="max-h-96 overflow-auto">
 						{configs.map((config, idx) => (

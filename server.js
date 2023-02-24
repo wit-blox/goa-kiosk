@@ -15,7 +15,7 @@ const { JsonDB, Config } = require("node-json-db");
 const PORT = 3001;
 
 // JsonDB setup
-const db = new JsonDB(new Config("configuration-db", true, false, "/"));
+const db = new JsonDB(new Config("vernier-db", true, false, "/"));
 
 // Middlewares
 app.use(express.json());
@@ -69,37 +69,41 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/init", async (req, res) => {
-	const isConnected = await initArdiuno();
+	try {
+		const isConnected = await initArdiuno();
 
-	if (!isConnected.success) {
-		return res.status(401).json({ msg: "error", data: isConnected.msg });
+		if (!isConnected.success) {
+			return res.status(401).json({ msg: "error", data: isConnected.msg });
+		}
+
+		const configurations = await db.getData("/configs");
+
+		port.on("open", () => {
+			console.log("serial port open");
+		});
+
+		parser.on("data", (data) => {
+			// console.log("data -> ", data);
+			const measurement = data.split(" ")[0];
+			if (measurement === lastMeasurement) return;
+			lastMeasurement = measurement;
+
+			const found = configurations.find(
+				(config) =>
+					parseFloat(config.min) <= measurement &&
+					parseFloat(config.max) >= measurement
+			);
+			if (!found) return;
+			if (found.id === lastVideoId) return;
+			lastVideoId = found.id;
+			// console.log("found", measurement, "->", found);
+			io.emit("measurement", { ...found, measurement });
+		});
+
+		res.json({ msg: "success", data: { configs: configurations } });
+	} catch (error) {
+		res.status(401).json({ msg: "error", data: error.message });
 	}
-
-	const configurations = await db.getData("/configs");
-
-	port.on("open", () => {
-		console.log("serial port open");
-	});
-
-	parser.on("data", (data) => {
-		console.log("data -> ", data);
-		const measurement = data.split(" ")[0];
-		if (measurement === lastMeasurement) return;
-		lastMeasurement = measurement;
-
-		const found = configurations.find(
-			(config) =>
-				parseFloat(config.min) <= measurement &&
-				parseFloat(config.max) >= measurement
-		);
-		if (!found) return;
-		if (found.id === lastVideoId) return;
-		lastVideoId = found.id;
-		// console.log("found", measurement, "->", found);
-		io.emit("measurement", { ...found, measurement });
-	});
-
-	res.json({ msg: "success", data: configurations });
 });
 
 app.get("/api/configs", async (req, res) => {

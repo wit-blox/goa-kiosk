@@ -77,10 +77,10 @@ const SerialDashboard = () => {
 					</Link>
 					<Link to="/dashboard">
 						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
-							Caliper Dashboard
+							Vernier Dashboard
 						</li>
 					</Link>
-					<Link to="/serial-dashboard">
+					<Link to="/sensors-dashboard">
 						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
 							Sensors Dashboard
 						</li>

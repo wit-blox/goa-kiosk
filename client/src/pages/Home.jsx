@@ -16,6 +16,7 @@ const Home = () => {
 			.get("/api/init")
 			.then(({ data }) => {
 				if (data.msg !== "success") return setApiError(data.msg);
+
 				console.log(data.data);
 
 				setDefaultVideo(data.data.configs[0].video);
@@ -64,7 +65,6 @@ const Home = () => {
 					</p>
 				</div>
 			)}
-			{console.log(currVideo)}
 			{currVideo || defaultVideo ? (
 				<video
 					src={`${API_URL}/api/upload/${currVideo ? currVideo : defaultVideo}`}
