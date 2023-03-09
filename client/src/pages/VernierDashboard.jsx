@@ -9,7 +9,7 @@ const App = () => {
 
 	useEffect(() => {
 		const getData = async () => {
-			const { data } = await axios.get("/api/configs");
+			const { data } = await axios.get("/api/vernier/configs");
 
 			if (data.msg !== "success") return;
 			setConfigs(data.data);
@@ -51,7 +51,7 @@ const App = () => {
 	};
 
 	const handleSubmit = async () => {
-		const res = await axios.patch("/api/configs", { configs });
+		const res = await axios.patch("/api/vernier/configs", { configs });
 		if (res.data.msg !== "success") return alert("Something went wrong");
 
 		alert("Configs updated successfully");
@@ -64,7 +64,7 @@ const App = () => {
 		const formData = new FormData();
 		formData.append("file", file);
 
-		const { data } = await axios.post("/api/upload", formData, {
+		const { data } = await axios.post("/api/vernier/upload", formData, {
 			headers: {
 				"Content-Type": "multipart/form-data",
 			},
@@ -84,12 +84,12 @@ const App = () => {
 				<h1>Dashboard</h1>
 
 				<ul className="flex gap-2 text-blue-500 underline">
-					<Link to="/">
+					<Link to="/vernier">
 						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
 							Home
 						</li>
 					</Link>
-					<Link to="/dashboard">
+					<Link to="/vernier-dashboard">
 						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
 							Vernier Dashboard
 						</li>
@@ -159,7 +159,7 @@ const App = () => {
 
 										{config.video && (
 											<a
-												href={`${API_URL}/api/upload/${config.video}`}
+												href={`${API_URL}/api/vernier/upload/${config.video}`}
 												target="_blank"
 												rel="noreferrer"
 												className="underline text-blue-600 hover:text-blue-500 mx-2"

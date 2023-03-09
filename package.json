@@ -5,8 +5,10 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node server.js",
-		"vernier": "concurrently \"npm start\" \"cd client && npm run preview -- --port 3000\"",
-		"sensors": "concurrently \"node sensors.js\" \"cd client && npm run preview -- --port 3000\"",
+		"sensors-start": "node server.js sensors",
+		"vernier-start": "node server.js vernier",
+		"sensors": "concurrently \"npm run sensors-start\" \"cd client && npm run preview -- --port 3000\"",
+		"vernier": "concurrently \"npm run vernier-start\" \"cd client && npm run preview -- --port 3000\"",
 		"dev": "nodemon server.js"
 	},
 	"keywords": [],

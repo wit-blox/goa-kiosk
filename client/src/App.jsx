@@ -1,8 +1,10 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
+import VernierDashboard from "./pages/VernierDashboard";
 import SensorsDashboard from "./pages/SensorsDashboard";
+import SensorsHome from "./pages/SensorsHome";
+import VernierHome from "./pages/VernierHome";
 
 const router = createBrowserRouter([
 	{
@@ -10,8 +12,16 @@ const router = createBrowserRouter([
 		element: <Home />,
 	},
 	{
-		path: "/dashboard",
-		element: <Dashboard />,
+		path: "/vernier",
+		element: <VernierHome />,
+	},
+	{
+		path: "/sensors",
+		element: <SensorsHome />,
+	},
+	{
+		path: "/vernier-dashboard",
+		element: <VernierDashboard />,
 	},
 	{
 		path: "/sensors-dashboard",

@@ -1,5 +1,4 @@
 node_modules
-uploads
-uploads2
-vernier-db.json
-sensors-db.json
+sensor-files
+vernier-files
+database.json

@@ -3,12 +3,7 @@
 echo "Starting Server for" $1
 
 npm install
-mkdir uploads && mkdir uploads2
+mkdir sensor-files && mkdir vernier-files
 cd client && npm install && npm run build && cd ..
-start http://localhost:3000
 
-if  [[ $1 = "sensors" ]]; then
-    npm run sensors
-elif [[ $1 = "vernier" ]]; then
-    npm run vernier
-fi
+npm run $1
