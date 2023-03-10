@@ -5,7 +5,10 @@ import { API_URL } from "../configs";
 import { Link } from "react-router-dom";
 
 const SerialDashboard = () => {
-	const [configs, setConfigs] = useState([]);
+	const [configs, setConfigs] = useState({
+		defaultVideo: "",
+		videos: [],
+	});
 
 	useEffect(() => {
 		const getData = async () => {
@@ -20,20 +23,20 @@ const SerialDashboard = () => {
 
 	const handleAddMoreConfig = () => {
 		if (configs.length === 11) return alert("Max 11 pins allowed");
-		let newConfigs = [...configs];
+		let newConfigs = [...configs.videos];
 		newConfigs.push({
 			video: "",
 			id: uuidv4(),
 		});
-		setConfigs(newConfigs);
+		setConfigs({ ...configs, videos: newConfigs });
 	};
 
 	const handleRemoveConfig = (id) => {
 		if (configs.length === 1) return;
-		let newConfigs = [...configs];
+		let newConfigs = [...configs.videos];
 		let newConfigIdx = newConfigs.findIndex((c) => c.id === id);
 		newConfigs.splice(newConfigIdx, 1);
-		setConfigs(newConfigs);
+		setConfigs({ ...configs, videos: newConfigs });
 	};
 
 	const handleSubmit = async () => {
@@ -58,10 +61,14 @@ const SerialDashboard = () => {
 			});
 
 			if (data.msg !== "success") return alert("Something went wrong");
-			let newConfigs = [...configs];
+
+			if (id === "default")
+				return setConfigs({ ...configs, defaultVideo: data.filename });
+
+			let newConfigs = [...configs.videos];
 			let newConfigIdx = newConfigs.findIndex((c) => c.id === id);
 			newConfigs[newConfigIdx].video = data.filename;
-			setConfigs(newConfigs);
+			setConfigs({ ...configs, videos: newConfigs });
 		} catch (error) {
 			console.log(error);
 		}
@@ -97,47 +104,25 @@ const SerialDashboard = () => {
 						<h2>Configurations for Sensors</h2>
 					</div>
 					<div className="max-h-96 overflow-auto">
-						{configs.map((config, idx) => (
-							<div
-								className="border-[1px] border-gray-900/10 rounded-md mx-4 my-4 p-2 relative"
+						<ConfigCard
+							config={{
+								video: configs?.defaultVideo,
+								id: "default",
+							}}
+							uploadVideo={uploadVideo}
+							btnText={`Upload Default Video`}
+							isDefault
+						/>
+
+						{configs.videos.map((config, idx) => (
+							<ConfigCard
 								key={config.id}
-							>
-								<div className="my-4 flex items-center gap-1">
-									<div>
-										<label
-											className="px-2 py-1 rounded-md bg-blue-600 hover:bg-blue-500 cursor-pointer text-white"
-											htmlFor={`video-${config.id}`}
-										>
-											Upload Video for Pin {idx + 1}
-										</label>
-										<input
-											id={`video-${config.id}`}
-											type="file"
-											onChange={(e) => uploadVideo(e, config.id)}
-											hidden
-											accept="video/*"
-										/>
-
-										{config.video && (
-											<a
-												href={`${API_URL}/api/sensors/upload/${config.video}`}
-												target="_blank"
-												rel="noreferrer"
-												className="underline text-blue-600 hover:text-blue-500 mx-2"
-											>
-												video link
-											</a>
-										)}
-									</div>
-								</div>
-
-								<button
-									className="absolute top-1/2 -right-2 transform -translate-y-1/2 p-0 px-2 rounded-md bg-red-600 hover:bg-red-500 cursor-pointer text-white"
-									onClick={() => handleRemoveConfig(config.id)}
-								>
-									X
-								</button>
-							</div>
+								config={config}
+								idx={idx}
+								handleRemoveConfig={handleRemoveConfig}
+								uploadVideo={uploadVideo}
+								btnText={`Upload Video for Pin ${idx + 1}`}
+							/>
 						))}
 					</div>
 					<div className="ml-4 mt-4">
@@ -173,3 +158,53 @@ const SerialDashboard = () => {
 };
 
 export default SerialDashboard;
+
+const ConfigCard = ({
+	config,
+	isDefault,
+	handleRemoveConfig,
+	uploadVideo,
+	btnText,
+}) => {
+	return (
+		<div className="border-[1px] border-gray-900/10 rounded-md mx-4 my-4 p-2 relative">
+			<div className="my-4 flex items-center gap-1">
+				<div>
+					<label
+						className="px-2 py-1 rounded-md bg-blue-600 hover:bg-blue-500 cursor-pointer text-white"
+						htmlFor={`video-${config.id}`}
+					>
+						{btnText}
+					</label>
+					<input
+						id={`video-${config.id}`}
+						type="file"
+						onChange={(e) => uploadVideo(e, config.id)}
+						hidden
+						accept="video/*"
+					/>
+
+					{config.video && (
+						<a
+							href={`${API_URL}/api/sensors/upload/${config.video}`}
+							target="_blank"
+							rel="noreferrer"
+							className="underline text-blue-600 hover:text-blue-500 mx-2"
+						>
+							video link
+						</a>
+					)}
+				</div>
+			</div>
+
+			{!isDefault && (
+				<button
+					className="absolute top-1/2 -right-2 transform -translate-y-1/2 p-0 px-2 rounded-md bg-red-600 hover:bg-red-500 cursor-pointer text-white"
+					onClick={() => handleRemoveConfig(config.id)}
+				>
+					X
+				</button>
+			)}
+		</div>
+	);
+};

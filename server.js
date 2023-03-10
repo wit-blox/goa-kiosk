@@ -30,17 +30,19 @@ io.on("connection", (socket) => {
 });
 
 httpServer.listen(PORT, () => {
-	childProcess.exec(
-		`start chrome --kiosk http://localhost:3000/${process.argv[2]}`,
-		(err, stdout, stderr) => {
-			if (err) {
-				console.log(err);
-				return;
+	if (process.argv[2]) {
+		childProcess.exec(
+			`start chrome --kiosk http://localhost:3000/${process.argv[2] || ""}`,
+			(err, stdout, stderr) => {
+				if (err) {
+					console.log(err);
+					return;
+				}
+				if (!stdout) return;
+				console.log(stdout);
 			}
-			if (!stdout) return;
-			console.log(stdout);
-		}
-	);
+		);
+	}
 
 	console.log(`Server started on port http://localhost:${PORT}`);
 });

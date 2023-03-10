@@ -51,10 +51,14 @@ const VernierHome = () => {
 					<h1 className="text-2xl">{apiError && apiError}</h1>
 					<p>
 						If you have connected the arudino, still seeing this?
-						<a href="/" className="text-blue-500">
-							{" "}
-							Click here
-						</a>
+						<button
+							onClick={() => {
+								window.location.reload();
+							}}
+							className="text-blue-500"
+						>
+							Click Here
+						</button>
 					</p>
 					<p>
 						Link for{" "}
@@ -79,7 +83,10 @@ const VernierHome = () => {
 					{!apiError && (
 						<>
 							<h1 className="text-4xl ">No video to display</h1>
-							<Link className="text-blue-500 text-center" to="/dashboard">
+							<Link
+								className="text-blue-500 text-center"
+								to="/vernier-dashboard"
+							>
 								Click here to change configurations
 							</Link>
 						</>

@@ -17,7 +17,7 @@ const SensorsHome = () => {
 			.then(({ data }) => {
 				if (data.msg !== "success") return setApiError(data.msg);
 
-				setDefaultVideo(data.data.configs[0].video);
+				setDefaultVideo(data.data.configs.defaultVideo);
 			})
 			.catch((err) => {
 				setApiError(err.response.data.data);
@@ -50,11 +50,15 @@ const SensorsHome = () => {
 				<div className="text-center mt-10">
 					<h1 className="text-2xl">{apiError && apiError}</h1>
 					<p>
-						If you have connected the arudino, still seeing this?
-						<a href="/" className="text-blue-500">
-							{" "}
-							Click here
-						</a>
+						If you have connected the arudino, still seeing this?{" "}
+						<button
+							onClick={() => {
+								window.location.reload();
+							}}
+							className="text-blue-500"
+						>
+							Click Here
+						</button>
 					</p>
 					<p>
 						Link for{" "}
@@ -79,7 +83,10 @@ const SensorsHome = () => {
 					{!apiError && (
 						<>
 							<h1 className="text-4xl ">No video to display</h1>
-							<Link className="text-blue-500 text-center" to="/dashboard">
+							<Link
+								className="text-blue-500 text-center"
+								to="/sensors-dashboard"
+							>
 								Click here to change configurations
 							</Link>
 						</>

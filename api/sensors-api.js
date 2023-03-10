@@ -51,6 +51,7 @@ async function initArdiuno() {
 
 router.get("/init", async (req, res) => {
 	try {
+		console.log("Initializing Serial port");
 		const isConnected = await initArdiuno();
 
 		if (!isConnected.success) {
@@ -61,22 +62,37 @@ router.get("/init", async (req, res) => {
 
 		port.on("open", () => {
 			console.log("serial port open");
+
+			res.json({ msg: "success", data: { configs } });
+		});
+
+		port.on("error", (err) => {
+			console.log("Error: ", err.message);
+			res.json({ msg: "error", data: err.message });
 		});
 
 		parser.on("data", (data) => {
-			if (parseInt(data) > configs.length - 1) return;
-			console.log("data", data);
+			if (data.split("")[0] === "o") {
+				lastVideoId = configs.defaultVideo;
+				req.io.emit("new-video", {
+					data: { id: "default", video: configs.defaultVideo },
+				});
+				return;
+			}
 
-			const currData = configs[parseInt(data)];
-			if (lastVideoId !== currData.id) {
+			if (parseInt(data) > configs.videos.length - 1) return;
+
+			// console.log("Sensor data -> ", data);
+
+			const currData = configs.videos[parseInt(data)];
+
+			if (lastVideoId !== currData?.id) {
 				// console.log(configs[parseInt(data)]);
 				req.io.emit("new-video", { data: currData });
 				// console.log("new video", currData);
-				lastVideoId = currData.id;
+				lastVideoId = currData?.id;
 			}
 		});
-
-		res.json({ msg: "success", data: { configs } });
 	} catch (error) {
 		res.status(401).json({ msg: "error", data: error.message });
 	}
