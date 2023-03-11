@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd C:/goa-kiosk
+
 echo "Starting Server for" $1
 
 npm install
