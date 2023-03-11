@@ -70,7 +70,7 @@ const VernierHome = () => {
 			)}
 			{currVideo || defaultVideo ? (
 				<video
-					src={`${API_URL}/api/sensors/upload/${
+					src={`${API_URL}/api/vernier/upload/${
 						currVideo ? currVideo : defaultVideo
 					}`}
 					autoPlay
