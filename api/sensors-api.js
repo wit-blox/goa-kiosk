@@ -7,6 +7,7 @@ const { ReadlineParser } = require("@serialport/parser-readline");
 const multer = require("multer");
 
 const { db } = require("../utils/db");
+const { replaceFileNameSpaces } = require("../helpers");
 
 // Multer setup
 const storage = multer.diskStorage({
@@ -14,7 +15,7 @@ const storage = multer.diskStorage({
 		cb(null, "sensor-files/");
 	},
 	filename: function (req, file, cb) {
-		cb(null, file.originalname);
+		cb(null, replaceFileNameSpaces(file.originalname));
 	},
 });
 
@@ -120,12 +121,17 @@ router.patch("/configs", async (req, res) => {
 });
 
 router.post("/upload", upload.single("file"), async (req, res) => {
-	res.json({ msg: "success", filename: req.file.filename });
+	const fileName = replaceFileNameSpaces(req.file.filename);
+	res.json({ msg: "success", filename: fileName });
 });
 
 router.get("/upload/:filename", async (req, res) => {
 	const { filename } = req.params;
-	const file = path.join(__dirname, "../sensor-files", filename);
+	const file = path.join(
+		__dirname,
+		"../sensor-files",
+		replaceFileNameSpaces(filename)
+	);
 	res.sendFile(file);
 });
 
