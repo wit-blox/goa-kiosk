@@ -5,6 +5,8 @@ import VernierDashboard from "./pages/VernierDashboard";
 import SensorsDashboard from "./pages/SensorsDashboard";
 import SensorsHome from "./pages/SensorsHome";
 import VernierHome from "./pages/VernierHome";
+import Reveal from "./pages/Reveal";
+import RevealDashboard from "./pages/RevealDashboard";
 
 const router = createBrowserRouter([
 	{
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
 	{
 		path: "/sensors-dashboard",
 		element: <SensorsDashboard />,
+	},
+	{
+		path: "/reveal",
+		element: <Reveal />,
+	},
+	{
+		path: "/reveal-dashboard",
+		element: <RevealDashboard />,
 	},
 ]);
 

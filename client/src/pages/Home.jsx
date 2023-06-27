@@ -11,14 +11,20 @@ const Home = () => {
 					<Link to="/sensors" className="text-blue-500">
 						Sensors
 					</Link>
-					<Link to="/vernier" className="text-blue-500">
-						Vernier
-					</Link>
 					<Link to="/sensors-dashboard" className="text-blue-500">
 						Sensors Dashboard
 					</Link>
+					<Link to="/vernier" className="text-blue-500">
+						Vernier
+					</Link>
 					<Link to="/vernier-dashboard" className="text-blue-500">
 						Vernier Dashboard
+					</Link>
+					<Link to="/reveal" className="text-blue-500">
+						Reveal
+					</Link>
+					<Link to="/reveal-dashboard" className="text-blue-500">
+						Reveal Dashboard
 					</Link>
 				</div>
 			</div>

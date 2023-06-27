@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { API_URL } from "../configs";
 import { Link } from "react-router-dom";
+import DashboardNav from "../components/DashboardNav";
 
 const App = () => {
 	const [configs, setConfigs] = useState([]);
@@ -80,27 +81,7 @@ const App = () => {
 
 	return (
 		<>
-			<nav className="p-4 shadow-gray-200 shadow-lg flex justify-between items-center">
-				<h1>Dashboard</h1>
-
-				<ul className="flex gap-2 text-blue-500 underline">
-					<Link to="/vernier">
-						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
-							Home
-						</li>
-					</Link>
-					<Link to="/vernier-dashboard">
-						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
-							Vernier Dashboard
-						</li>
-					</Link>
-					<Link to="/sensors-dashboard">
-						<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
-							Sensors Dashboard
-						</li>
-					</Link>
-				</ul>
-			</nav>
+			<DashboardNav />
 
 			<main className="h-[80vh] p-5 flex justify-center flex-col items-center">
 				<div className="w-full min-w-fit sm:w-4/12 p-5 rounded-lg shadow-gray-300 shadow-2xl">
