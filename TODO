@@ -1,3 +1,0 @@
-- PORT.write working fine
-- Need to parse the data from the serial port for arduino
-- Once parsed, turn on the associated pin
