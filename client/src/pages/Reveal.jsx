@@ -179,7 +179,7 @@ const ItemContainer = ({ item, handleItemClick, idx }) => {
 				<img
 					src={`${API_URL}/api/reveal/upload/${item.image}`}
 					alt="item"
-					className="w-full h-full object-cover"
+					className="w-full h-full object-contain"
 				/>
 			) : (
 				<div>🙈</div>
