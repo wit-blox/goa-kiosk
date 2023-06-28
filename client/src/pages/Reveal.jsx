@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import io from "socket.io-client";
 import { API_URL } from "../configs";
+import Modal from "../components/Modal";
 
 const socket = io(API_URL);
 
 const Reveal = () => {
 	const [apiError, setApiError] = useState(null);
 	const [items, setItems] = useState([]);
+	const [activeItem, setActiveItem] = useState(null);
 
 	useEffect(() => {
 		axios
@@ -51,11 +53,27 @@ const Reveal = () => {
 		axios
 			.get(`/api/reveal/on?pin=${idx}`)
 			.then(({ data }) => {
+				// console.log(data);
+				// console.log(items[idx - 1].image, "image");
+				if (items[idx - 1]) {
+					setActiveItem(items[idx - 1].video);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	const handleModalClose = () => {
+		axios
+			.get(`/api/reveal/on?pin=0`)
+			.then(({ data }) => {
 				console.log(data);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+		setActiveItem(null);
 	};
 
 	if (apiError) {
@@ -83,12 +101,13 @@ const Reveal = () => {
 		);
 	}
 
-	if (!items.length)
+	if (!items.length) {
 		return (
-			<div className="text-center mt-10">
+			<div className="text-center bg-black text-white h-screen">
 				<h1 className="text-2xl">Loading...</h1>
 			</div>
 		);
+	}
 
 	return (
 		<>
@@ -135,6 +154,12 @@ const Reveal = () => {
 						handleItemClick={handleItemClick}
 					/>
 				</div>
+
+				<Modal
+					onClose={handleModalClose}
+					isHidden={activeItem ? false : true}
+					activeItem={activeItem}
+				/>
 			</div>
 		</>
 	);
