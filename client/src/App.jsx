@@ -1,12 +1,14 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
-import VernierDashboard from "./pages/VernierDashboard";
-import SensorsDashboard from "./pages/SensorsDashboard";
+import VernierDashboard from "./pages/Dashboard/VernierDashboard";
+import SensorsDashboard from "./pages/Dashboard/SensorsDashboard";
 import SensorsHome from "./pages/SensorsHome";
 import VernierHome from "./pages/VernierHome";
 import Reveal from "./pages/Reveal";
-import RevealDashboard from "./pages/RevealDashboard";
+import RevealDashboard from "./pages/Dashboard/RevealDashboard";
+import HeightWeight from "./pages/Height&Weight";
+import HeightDashboard from "./pages/Dashboard/HeightDashboard";
 
 const router = createBrowserRouter([
 	{
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
 	{
 		path: "/reveal-dashboard",
 		element: <RevealDashboard />,
+	},
+	{
+		path: "/height-weight",
+		element: <HeightWeight />,
+	},
+	{
+		path: "/height-dashboard",
+		element: <HeightDashboard />,
 	},
 ]);
 

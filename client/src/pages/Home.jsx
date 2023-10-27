@@ -5,7 +5,7 @@ const Home = () => {
 	return (
 		<div className="bg-gray-100 h-screen flex justify-center items-center">
 			<div className="border-2 p-10 rounded-lg flex flex-col justify-center items-center text-center">
-				<h1 className="text-2xl mb-5">Links</h1>
+				<h1 className="text-2xl mb-5">Quick Links</h1>
 
 				<div className="flex flex-col">
 					<Link to="/sensors" className="text-blue-500">
@@ -25,6 +25,9 @@ const Home = () => {
 					</Link>
 					<Link to="/reveal-dashboard" className="text-blue-500">
 						Reveal Dashboard
+					</Link>
+					<Link to="/height-weight" className="text-blue-500">
+						Height & Weight
 					</Link>
 				</div>
 			</div>

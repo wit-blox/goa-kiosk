@@ -1,16 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { API_URL } from "../configs";
-import { Link } from "react-router-dom";
-import DashboardNav from "../components/DashboardNav";
+import { API_URL } from "../../configs";
+import DashboardNav from "../../components/DashboardNav";
 
-const App = () => {
+const HeightDashboard = () => {
 	const [configs, setConfigs] = useState([]);
 
 	useEffect(() => {
 		const getData = async () => {
-			const { data } = await axios.get("/api/vernier/configs");
+			const { data } = await axios.get("/api/height/configs");
 
 			if (data.msg !== "success") return;
 			setConfigs(data.data);
@@ -52,7 +51,7 @@ const App = () => {
 	};
 
 	const handleSubmit = async () => {
-		const res = await axios.patch("/api/vernier/configs", { configs });
+		const res = await axios.patch("/api/height/configs", { configs });
 		if (res.data.msg !== "success") return alert("Something went wrong");
 
 		alert("Configs updated successfully");
@@ -65,7 +64,7 @@ const App = () => {
 		const formData = new FormData();
 		formData.append("file", file);
 
-		const { data } = await axios.post("/api/vernier/upload", formData, {
+		const { data } = await axios.post("/api/height/upload", formData, {
 			headers: {
 				"Content-Type": "multipart/form-data",
 			},
@@ -86,7 +85,7 @@ const App = () => {
 			<main className="h-[80vh] p-5 flex justify-center flex-col items-center">
 				<div className="w-full min-w-fit sm:w-4/12 p-5 rounded-lg shadow-gray-300 shadow-2xl">
 					<div className="text-xl font-semibold text-center my-2">
-						<h2>Configurations for Vernier</h2>
+						<h2>Configurations for Height Sensor</h2>
 					</div>
 					<div className="max-h-96 overflow-auto">
 						{configs.map((config, idx) => (
@@ -140,7 +139,7 @@ const App = () => {
 
 										{config.video && (
 											<a
-												href={`${API_URL}/api/vernier/upload/${config.video}`}
+												href={`${API_URL}/api/height/upload/${config.video}`}
 												target="_blank"
 												rel="noreferrer"
 												className="underline text-blue-600 hover:text-blue-500 mx-2"
@@ -192,4 +191,4 @@ const App = () => {
 	);
 };
 
-export default App;
+export default HeightDashboard;

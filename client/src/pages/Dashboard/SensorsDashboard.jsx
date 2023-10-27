@@ -1,21 +1,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { API_URL } from "../configs";
+import { API_URL } from "../../configs";
 import { Link } from "react-router-dom";
-import DashboardNav from "../components/DashboardNav";
+import DashboardNav from "../../components/DashboardNav";
 
-const RevealDashboard = () => {
+const SerialDashboard = () => {
 	const [configs, setConfigs] = useState({
+		defaultVideo: "",
 		videos: [],
 	});
 
 	useEffect(() => {
 		const getData = async () => {
-			const { data } = await axios.get("/api/reveal/configs");
+			const { data } = await axios.get("/api/sensors/configs");
 
 			if (data.msg !== "success") return;
-			console.log(data);
 			setConfigs(data.data);
 		};
 
@@ -41,13 +41,13 @@ const RevealDashboard = () => {
 	};
 
 	const handleSubmit = async () => {
-		const res = await axios.patch("/api/reveal/configs", { configs });
+		const res = await axios.patch("/api/sensors/configs", { configs });
 		if (res.data.msg !== "success") return alert("Something went wrong");
 
 		alert("Configs updated successfully");
 	};
 
-	const uploadVideo = async (e, id, type = "video") => {
+	const uploadVideo = async (e, id) => {
 		const file = e.target.files[0];
 		if (!file) return;
 
@@ -55,7 +55,7 @@ const RevealDashboard = () => {
 		formData.append("file", file);
 
 		try {
-			const { data } = await axios.post("/api/reveal/upload", formData, {
+			const { data } = await axios.post("/api/sensors/upload", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},
@@ -63,16 +63,13 @@ const RevealDashboard = () => {
 
 			if (data.msg !== "success") return alert("Something went wrong");
 
+			if (id === "default")
+				return setConfigs({ ...configs, defaultVideo: data.filename });
+
 			let newConfigs = [...configs.videos];
 			let newConfigIdx = newConfigs.findIndex((c) => c.id === id);
-
-			if (type === "video") {
-				newConfigs[newConfigIdx].video = data.filename;
-				setConfigs({ ...configs, videos: newConfigs });
-			} else {
-				newConfigs[newConfigIdx].image = data.filename;
-				setConfigs({ ...configs, videos: newConfigs });
-			}
+			newConfigs[newConfigIdx].video = data.filename;
+			setConfigs({ ...configs, videos: newConfigs });
 		} catch (error) {
 			console.log(error);
 		}
@@ -85,9 +82,19 @@ const RevealDashboard = () => {
 			<main className="h-[80vh] p-5 flex justify-center flex-col items-center">
 				<div className="w-full min-w-fit sm:w-4/12 p-5 rounded-lg shadow-gray-300 shadow-2xl">
 					<div className="text-xl font-semibold text-center my-2">
-						<h2>Configurations for Reveal</h2>
+						<h2>Configurations for Sensors</h2>
 					</div>
 					<div className="max-h-96 overflow-auto">
+						<ConfigCard
+							config={{
+								video: configs?.defaultVideo,
+								id: "default",
+							}}
+							uploadVideo={uploadVideo}
+							btnText={`Upload Default Video`}
+							isDefault
+						/>
+
 						{configs.videos.map((config, idx) => (
 							<ConfigCard
 								key={config.id}
@@ -95,7 +102,7 @@ const RevealDashboard = () => {
 								idx={idx}
 								handleRemoveConfig={handleRemoveConfig}
 								uploadVideo={uploadVideo}
-								pinCount={idx + 1}
+								btnText={`Upload Video for Pin ${idx + 1}`}
 							/>
 						))}
 					</div>
@@ -131,62 +138,36 @@ const RevealDashboard = () => {
 	);
 };
 
-export default RevealDashboard;
+export default SerialDashboard;
 
 const ConfigCard = ({
 	config,
 	isDefault,
 	handleRemoveConfig,
 	uploadVideo,
-	pinCount,
+	btnText,
 }) => {
 	return (
 		<div className="border-[1px] border-gray-900/10 rounded-md mx-4 my-4 p-2 relative">
-			<div className="my-4 flex justify-center gap-7 flex-col">
-				<div>
-					<label
-						className="px-2 py-1 rounded-md bg-blue-600 hover:bg-blue-500 cursor-pointer text-white"
-						htmlFor={`image-${config.id}`}
-					>
-						Upload image for Pin {pinCount}
-					</label>
-					<input
-						id={`image-${config.id}`}
-						type="file"
-						onChange={(e) => uploadVideo(e, config.id, "image")}
-						hidden
-						accept="image/*"
-					/>
-
-					{config.image && (
-						<a
-							href={`${API_URL}/api/reveal/upload/${config.image}`}
-							target="_blank"
-							rel="noreferrer"
-							className="underline text-blue-600 hover:text-blue-500 mx-2"
-						>
-							image link
-						</a>
-					)}
-				</div>
+			<div className="my-4 flex items-center gap-1">
 				<div>
 					<label
 						className="px-2 py-1 rounded-md bg-blue-600 hover:bg-blue-500 cursor-pointer text-white"
 						htmlFor={`video-${config.id}`}
 					>
-						Upload video for Pin {pinCount}
+						{btnText}
 					</label>
 					<input
 						id={`video-${config.id}`}
 						type="file"
-						onChange={(e) => uploadVideo(e, config.id, "video")}
+						onChange={(e) => uploadVideo(e, config.id)}
 						hidden
 						accept="video/*"
 					/>
 
 					{config.video && (
 						<a
-							href={`${API_URL}/api/reveal/upload/${config.video}`}
+							href={`${API_URL}/api/sensors/upload/${config.video}`}
 							target="_blank"
 							rel="noreferrer"
 							className="underline text-blue-600 hover:text-blue-500 mx-2"

@@ -27,6 +27,11 @@ const DashboardNav = () => {
 						Reveal Dashboard
 					</li>
 				</Link>
+				<Link to="/height-dashboard">
+					<li className="px-4 py-2 rounded-md hover:bg-gray-900/10 cursor-pointer">
+						Height Dashboard
+					</li>
+				</Link>
 			</ul>
 		</nav>
 	);

@@ -8,5 +8,6 @@ router.get("/", (req, res) => {
 router.use("/vernier", require("./vernier-api"));
 router.use("/sensors", require("./sensors-api"));
 router.use("/reveal", require("./reveal-api"));
+router.use("/height", require("./height-api"));
 
 module.exports = router;
