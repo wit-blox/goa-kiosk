@@ -8,9 +8,13 @@
 		"reveal-start": "node server.js reveal",
 		"sensors-start": "node server.js sensors",
 		"vernier-start": "node server.js vernier",
+		"height-start": "node server.js height",
+		"weight-start": "node server.js weight",
 		"sensors": "concurrently \"npm run sensors-start\" \"cd client && npm run preview -- --port 3000\"",
 		"vernier": "concurrently \"npm run vernier-start\" \"cd client && npm run preview -- --port 3000\"",
 		"reveal": "concurrently \"npm run reveal-start\" \"cd client && npm run preview -- --port 3000\"",
+		"height": "concurrently \"npm run height-start\" \"cd client && npm run preview -- --port 3000\"",
+		"weight": "concurrently \"npm run weight-start\" \"cd client && npm run preview -- --port 3000\"",
 		"dev": "nodemon server.js"
 	},
 	"keywords": [],

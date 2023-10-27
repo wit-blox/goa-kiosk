@@ -5,11 +5,13 @@ scriptType=$1
 
 if [[ $scriptType ==  "" ]]; then
     echo -e "Which script do you want to run?"
-    select type in "Sensors" "Vernier" "Reveal" "Exit"; do
+    select type in "Sensors" "Vernier" "Reveal" "Height" "Weight" "Exit"; do
         case $type in
             Sensors) scriptType=$type; break;;
             Vernier) scriptType=$type; break;;
             Reveal) scriptType=$type; break;;
+            Weight) scriptType=$type; break;;
+            Height) scriptType=$type; break;;
             Exit) exit;;
         esac
     done
