@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import io from "socket.io-client";
 import { API_URL } from "../configs";
 
@@ -10,13 +10,15 @@ const HeightWeight = () => {
 	const [apiError, setApiError] = useState(null);
 	const [currVideo, setCurrVideo] = useState(null);
 	const [measurement, setMeasurement] = useState(0);
+	const [searchParams] = useSearchParams({ mode: "height" });
+	const mode = searchParams.get("mode"); // height || weight
 	const lastMeasurement = useRef(0);
 	const configsRef = useRef([]);
 	const sameMeasurementCounter = useRef(0);
 
 	useEffect(() => {
 		axios
-			.get("/api/height/init")
+			.get(`/api/${mode}/init`)
 			.then(({ data }) => {
 				if (data.msg !== "success") return setApiError(data.msg);
 				configsRef.current = data.data.configs;
@@ -52,7 +54,14 @@ const HeightWeight = () => {
 	}, []);
 
 	const handleMeasurementChange = (data) => {
-		const newMeasurement = parseInt(data.measurement);
+		let newMeasurement = parseInt(data.measurement);
+		if (mode === "weight") {
+			if (newMeasurement < 0) {
+				newMeasurement = 0;
+			}
+			newMeasurement = newMeasurement / 1000;
+		}
+		// console.log(newMeasurement);
 
 		setMeasurement(newMeasurement);
 
@@ -94,7 +103,7 @@ const HeightWeight = () => {
 	return (
 		<div>
 			{apiError && (
-				<div className="text-center mt-10">
+				<div className="text-center mt-10 text-red-600">
 					<h1 className="text-2xl">{apiError && apiError}</h1>
 					<p>
 						If you have connected the arudino, still seeing this?{" "}
@@ -109,7 +118,7 @@ const HeightWeight = () => {
 					</p>
 					<p>
 						Link for{" "}
-						<Link to="/height-dashboard" className="text-blue-500">
+						<Link to={`/${mode}-dashboard`} className="text-blue-500">
 							dashboard
 						</Link>
 					</p>
@@ -119,13 +128,15 @@ const HeightWeight = () => {
 				{!currVideo ? (
 					<div>
 						<h1 className="text-[20rem] mb-24">
-							{measurement}
-							<span className="text-5xl text-gray-400">cm</span>
+							{mode === "height" ? measurement : measurement.toFixed(2)}
+							<span className="text-5xl text-gray-400">
+								{mode === "height" ? "cm" : "kg"}
+							</span>
 						</h1>
 					</div>
 				) : (
 					<video
-						src={`${API_URL}/api/height/upload/${currVideo}`}
+						src={`${API_URL}/api/${mode}/upload/${currVideo}`}
 						autoPlay
 						muted
 						// controls

@@ -12,7 +12,7 @@ const { db } = require("../utils/db");
 // Multer setup
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, "height-files/");
+		cb(null, "weight-files/");
 	},
 	filename: function (req, file, cb) {
 		cb(null, file.originalname);
@@ -40,7 +40,7 @@ async function initArdiuno() {
 	if (!port) {
 		port = new SerialPort({
 			path: activePort.path,
-			baudRate: 9600,
+			baudRate: 57600,
 		});
 		parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
 	}
@@ -56,7 +56,7 @@ router.get("/init", async (req, res) => {
 			return res.status(401).json({ msg: "error", data: isConnected.msg });
 		}
 
-		const configurations = await db.getData("/height-configs");
+		const configurations = await db.getData("/weight-configs");
 
 		port.on("open", () => {
 			console.log("serial port open");
@@ -75,7 +75,7 @@ router.get("/init", async (req, res) => {
 
 router.get("/configs", async (req, res) => {
 	try {
-		const configurations = await db.getData("/height-configs");
+		const configurations = await db.getData("/weight-configs");
 		res.json({ msg: "success", data: configurations });
 	} catch (error) {
 		res.json({ msg: "error", data: error.message });
@@ -85,7 +85,7 @@ router.get("/configs", async (req, res) => {
 router.patch("/configs", async (req, res) => {
 	const configs = req.body.configs;
 
-	await db.push("/height-configs", configs, true);
+	await db.push("/weight-configs", configs, true);
 	res.json({ msg: "success", data: configs });
 });
 
@@ -95,7 +95,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
 
 router.get("/upload/:filename", async (req, res) => {
 	const { filename } = req.params;
-	const file = path.join(__dirname, "../height-files", filename);
+	const file = path.join(__dirname, "../weight-files", filename);
 	res.sendFile(file);
 });
 

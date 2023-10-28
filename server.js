@@ -30,9 +30,26 @@ io.on("connection", (socket) => {
 });
 
 httpServer.listen(PORT, () => {
-	if (process.argv[2]) {
+	const arg = process.argv[2];
+
+	if (arg === "weight" || arg === "height") {
 		childProcess.exec(
-			`start chrome --kiosk http://localhost:3000/${process.argv[2] || ""}`,
+			`start chrome --kiosk http://localhost:3000/height-weight?mode=${arg}`,
+			(err, stdout, stderr) => {
+				if (err) {
+					console.log(err);
+					return;
+				}
+				if (!stdout) return;
+				console.log(stdout);
+			}
+		);
+		return;
+	}
+
+	if (arg) {
+		childProcess.exec(
+			`start chrome --kiosk http://localhost:3000/${arg || ""}`,
 			(err, stdout, stderr) => {
 				if (err) {
 					console.log(err);

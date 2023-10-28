@@ -9,6 +9,7 @@ import Reveal from "./pages/Reveal";
 import RevealDashboard from "./pages/Dashboard/RevealDashboard";
 import HeightWeight from "./pages/Height&Weight";
 import HeightDashboard from "./pages/Dashboard/HeightDashboard";
+import WeightDashboard from "./pages/Dashboard/WeightDashboard";
 
 const router = createBrowserRouter([
 	{
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
 	{
 		path: "/height-dashboard",
 		element: <HeightDashboard />,
+	},
+	{
+		path: "/weight-dashboard",
+		element: <WeightDashboard />,
 	},
 ]);
 
