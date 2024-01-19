@@ -127,7 +127,7 @@ const WeightDashboard = () => {
 											className="px-2 py-1 rounded-md bg-blue-600 hover:bg-blue-500 cursor-pointer text-white"
 											htmlFor={`video-${config.id}`}
 										>
-											Upload Video
+											Upload Image
 										</label>
 										<input
 											id={`video-${config.id}`}
@@ -139,12 +139,12 @@ const WeightDashboard = () => {
 
 										{config.video && (
 											<a
-												href={`${API_URL}/api/height/upload/${config.video}`}
+												href={`${API_URL}/api/weight/upload/${config.video}`}
 												target="_blank"
 												rel="noreferrer"
 												className="underline text-blue-600 hover:text-blue-500 mx-2"
 											>
-												video link
+												Image link
 											</a>
 										)}
 									</div>

@@ -127,7 +127,7 @@ const HeightDashboard = () => {
 											className="px-2 py-1 rounded-md bg-blue-600 hover:bg-blue-500 cursor-pointer text-white"
 											htmlFor={`video-${config.id}`}
 										>
-											Upload Video
+											Upload Image
 										</label>
 										<input
 											id={`video-${config.id}`}
@@ -144,7 +144,7 @@ const HeightDashboard = () => {
 												rel="noreferrer"
 												className="underline text-blue-600 hover:text-blue-500 mx-2"
 											>
-												video link
+												image link
 											</a>
 										)}
 									</div>
