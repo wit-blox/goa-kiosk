@@ -19,8 +19,8 @@ fi
 
 echo "Starting Server for" $scriptType
 
-npm install
+# npm install
 mkdir sensor-files && mkdir vernier-files && mkdir reveal-files && mkdir height-files && mkdir weight-files
-cd client && npm install && npm run build && cd ..
+# cd client && npm install && npm run build && cd ..
 
 npm run $scriptType
