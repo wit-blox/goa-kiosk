@@ -134,7 +134,7 @@ const WeightDashboard = () => {
 											type="file"
 											onChange={(e) => uploadImage(e, config.id)}
 											hidden
-											accept="video/*"
+											accept="image/*"
 										/>
 
 										{config.video && (
