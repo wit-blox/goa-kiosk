@@ -135,17 +135,22 @@ const HeightWeight = () => {
 						</h1>
 					</div>
 				) : (
-					<video
-						src={`${API_URL}/api/${mode}/upload/${currVideo}`}
-						autoPlay
-						muted
-						// controls
-						className="w-full h-full fixed top-0 left-0 object-contain bg-black"
-						onEnded={() => {
-							socket.on("new-measurement", handleMeasurementChange);
-							setCurrVideo("");
-						}}
-					/>
+					<>
+						<img
+							src={`${API_URL}/api/${mode}/upload/${currVideo}`}
+							className="w-full h-full fixed top-0 left-0 object-contain bg-black"
+						/>
+						{/* <video
+							autoPlay
+							muted
+							// controls
+							className="w-full h-full fixed top-0 left-0 object-contain bg-black"
+							onEnded={() => {
+								socket.on("new-measurement", handleMeasurementChange);
+								setCurrVideo("");
+							}}
+						/> */}
+					</>
 				)}
 			</div>
 			{/* {setCurrVideo || defaultVideo ? (

@@ -57,7 +57,7 @@ const HeightDashboard = () => {
 		alert("Configs updated successfully");
 	};
 
-	const uploadVideo = async (e, id) => {
+	const uploadImage = async (e, id) => {
 		const file = e.target.files[0];
 		if (!file) return;
 
@@ -132,7 +132,7 @@ const HeightDashboard = () => {
 										<input
 											id={`video-${config.id}`}
 											type="file"
-											onChange={(e) => uploadVideo(e, config.id)}
+											onChange={(e) => uploadImage(e, config.id)}
 											hidden
 											accept="video/*"
 										/>
