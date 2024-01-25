@@ -97,6 +97,12 @@ const RevealDetails = () => {
 										<td className="font-bold">Appearance</td>
 										<td className="pl-20">{configData.appearance}</td>
 									</tr>
+									{configData.threats && (
+										<tr>
+											<td className="font-bold">Appearance</td>
+											<td className="pl-20">{configData.appearance}</td>
+										</tr>
+									)}
 								</>
 							) : (
 								<>
