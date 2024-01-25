@@ -1,6 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+	Link,
+	useNavigate,
+	useParams,
+	useSearchParams,
+} from "react-router-dom";
 import { API_URL } from "../configs";
 import learnMoreImage from "../assets/img/blog/learnmore.png";
 
@@ -8,6 +13,7 @@ const TIMER = 30; // in seconds
 
 const RevealDetails = () => {
 	const params = useParams();
+	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
 	const [configData, setConfigData] = useState(null);
 	const [isMoreInfoClicked, setIsMoreInfoClicked] = useState(false);
@@ -42,7 +48,7 @@ const RevealDetails = () => {
 
 	useEffect(() => {
 		axios
-			.get(`/api/reveal/on?pin=${1}`)
+			.get(`/api/reveal/on?pin=${searchParams.get("pin")}`)
 			.then(({ data }) => {
 				console.log(data);
 			})
