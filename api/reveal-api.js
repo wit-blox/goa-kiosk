@@ -98,6 +98,7 @@ router.get("/on", (req, res) => {
 	const pin = req.query.pin;
 	port.write(`${pin}\n`, (err) => {
 		if (err) return res.json({ msg: "error", data: err.message });
+		console.log("Last active pin: ", pin);
 	});
 
 	res.json({ msg: "success", data: "pin sent" });
