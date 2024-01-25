@@ -111,9 +111,9 @@ const Reveal = () => {
 
 	return (
 		<>
-			<main className="grid grid-cols-7 gap-1 grid-rows-8 bg-black h-screen">
+			<main className="grid grid-cols-12 grid-rows-8 gap-1 bg-black h-screen">
 				<div
-					className="col-span-3 row-span-4 relative"
+					className="col-span-6 row-span-4 relative"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[0].images[0].filename}) no-repeat center center/cover`,
 					}}
@@ -126,7 +126,7 @@ const Reveal = () => {
 					</Link>
 				</div>
 				<div
-					className="relative col-span-3 row-span-4 col-start-1 row-start-5"
+					className="relative col-span-3 row-span-5 col-start-7"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[1].images[0].filename}) no-repeat center center/cover`,
 					}}
@@ -139,7 +139,7 @@ const Reveal = () => {
 					</Link>
 				</div>
 				<div
-					className="col-span-4 row-span-5 col-start-4 row-start-1 relative"
+					className="col-span-3 row-span-5 col-start-10 relative"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[2].images[0].filename}) no-repeat center center/cover`,
 					}}
@@ -152,7 +152,7 @@ const Reveal = () => {
 					</Link>
 				</div>
 				<div
-					className="col-span-2 row-span-3 col-start-4 row-start-6 relative"
+					className="col-span-3 row-span-4 row-start-5 relative"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[3].images[0].filename}) no-repeat center center/cover`,
 					}}
@@ -165,7 +165,7 @@ const Reveal = () => {
 					</Link>
 				</div>
 				<div
-					className="col-span-2 row-span-3 col-start-6 row-start-6 relative"
+					className="col-span-3 row-span-4 col-start-4 row-start-5 relative"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[4].images[0].filename}) no-repeat center center/cover`,
 					}}
@@ -175,6 +175,32 @@ const Reveal = () => {
 						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
 					>
 						{items[4].name} &#187;
+					</Link>
+				</div>
+				<div
+					className="col-span-3 row-span-3 col-start-7 row-start-6 relative"
+					style={{
+						background: `url(${API_URL}/api/reveal/upload/${items[5].images[0].filename}) no-repeat center center/cover`,
+					}}
+				>
+					<Link
+						to={`/reveal/${items[5].id}`}
+						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
+					>
+						{items[5].name} &#187;
+					</Link>
+				</div>
+				<div
+					className="col-span-3 row-span-3 col-start-10 row-start-6 relative"
+					style={{
+						background: `url(${API_URL}/api/reveal/upload/${items[6].images[0].filename}) no-repeat center center/cover`,
+					}}
+				>
+					<Link
+						to={`/reveal/${items[6].id}`}
+						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
+					>
+						{items[6].name} &#187;
 					</Link>
 				</div>
 			</main>
