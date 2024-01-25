@@ -97,7 +97,7 @@ const ConfigCard = ({ config, handleRemoveConfig }) => {
 			<div className="my-4 flex justify-center gap-7 flex-col">
 				<div>
 					<img
-						src={`${API_URL}/api/reveal/upload/${config.images[0].filename}`}
+						src={`${API_URL}/api/reveal/upload/${config.images[0]?.filename}`}
 						alt="..."
 						className="h-32 w-48 mt-2"
 					/>
