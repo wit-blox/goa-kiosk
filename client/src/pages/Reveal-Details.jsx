@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../configs";
 import learnMoreImage from "../assets/img/blog/learnmore.png";
 
@@ -59,8 +59,14 @@ const RevealDetails = () => {
 
 	return (
 		<main className="bg-image h-screen py-2 px-32">
-			<div className="">
+			<div className="flex justify-between items-center">
 				<h1 className="text-3xl font-semibold uppercase">{configData.name}</h1>
+				<Link
+					to="/reveal"
+					className="bg-red-600 text-white flex justify-center items-center px-4 py-1 rounded-md mr-8"
+				>
+					Home
+				</Link>
 			</div>
 
 			<section className="mt-6 grid grid-cols-3 grid-rows-5 gap-4">
