@@ -113,9 +113,10 @@ const Reveal = () => {
 		<>
 			<main className="grid grid-cols-12 grid-rows-8 gap-1 bg-black h-screen">
 				<div
-					className="col-span-6 row-span-4 relative"
+					className="col-span-4 row-span-4 relative"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[0].images[0].filename}) no-repeat center center/cover`,
+						backgroundSize: "100% 100%",
 					}}
 				>
 					<Link
@@ -126,9 +127,10 @@ const Reveal = () => {
 					</Link>
 				</div>
 				<div
-					className="relative col-span-3 row-span-5 col-start-7"
+					className="relative col-span-4 row-span-5 col-start-5"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[1].images[0].filename}) no-repeat center center/cover`,
+						backgroundSize: "100% 100%",
 					}}
 				>
 					<Link
@@ -139,9 +141,10 @@ const Reveal = () => {
 					</Link>
 				</div>
 				<div
-					className="col-span-3 row-span-5 col-start-10 relative"
+					className="col-span-4 row-span-5 col-start-9 relative"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[2].images[0].filename}) no-repeat center center/cover`,
+						backgroundSize: "100% 100%",
 					}}
 				>
 					<Link
@@ -152,9 +155,10 @@ const Reveal = () => {
 					</Link>
 				</div>
 				<div
-					className="col-span-3 row-span-4 row-start-5 relative"
+					className="col-span-2 row-span-4 row-start-5 relative"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[3].images[0].filename}) no-repeat center center/cover`,
+						backgroundSize: "100% 100%",
 					}}
 				>
 					<Link
@@ -165,9 +169,10 @@ const Reveal = () => {
 					</Link>
 				</div>
 				<div
-					className="col-span-3 row-span-4 col-start-4 row-start-5 relative"
+					className="col-span-2 row-span-4 col-start-3 row-start-5 relative"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[4].images[0].filename}) no-repeat center center/cover`,
+						backgroundSize: "100% 100%",
 					}}
 				>
 					<Link
@@ -178,9 +183,10 @@ const Reveal = () => {
 					</Link>
 				</div>
 				<div
-					className="col-span-3 row-span-3 col-start-7 row-start-6 relative"
+					className="col-span-4 row-span-3 col-start-5 row-start-6 relative"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[5].images[0].filename}) no-repeat center center/cover`,
+						backgroundSize: "100% 100%",
 					}}
 				>
 					<Link
@@ -191,9 +197,10 @@ const Reveal = () => {
 					</Link>
 				</div>
 				<div
-					className="col-span-3 row-span-3 col-start-10 row-start-6 relative"
+					className="col-span-4 row-span-3 col-start-9 row-start-6"
 					style={{
 						background: `url(${API_URL}/api/reveal/upload/${items[6].images[0].filename}) no-repeat center center/cover`,
+						backgroundSize: "100% 100%",
 					}}
 				>
 					<Link
