@@ -120,7 +120,7 @@ const Reveal = () => {
 					}}
 				>
 					<Link
-						to={`/reveal/${items[0].id}`}
+						to={`/reveal/${items[0].id}?pin=${1}`}
 						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
 					>
 						{items[0].name} &#187;
@@ -134,7 +134,7 @@ const Reveal = () => {
 					}}
 				>
 					<Link
-						to={`/reveal/${items[1].id}`}
+						to={`/reveal/${items[1].id}?pin=${2}`}
 						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
 					>
 						{items[1].name} &#187;
@@ -148,7 +148,7 @@ const Reveal = () => {
 					}}
 				>
 					<Link
-						to={`/reveal/${items[2].id}`}
+						to={`/reveal/${items[2].id}?pin=${3}`}
 						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
 					>
 						{items[2].name} &#187;
@@ -162,7 +162,7 @@ const Reveal = () => {
 					}}
 				>
 					<Link
-						to={`/reveal/${items[3].id}`}
+						to={`/reveal/${items[3].id}?pin=${4}`}
 						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
 					>
 						{items[3].name} &#187;
