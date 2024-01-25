@@ -6,7 +6,9 @@ import SensorsDashboard from "./pages/Dashboard/SensorsDashboard";
 import SensorsHome from "./pages/SensorsHome";
 import VernierHome from "./pages/VernierHome";
 import Reveal from "./pages/Reveal";
-import RevealDashboard from "./pages/Dashboard/RevealDashboard";
+import RevealDetails from "./pages/Reveal-Details";
+import RevealDashboard from "./pages/Dashboard/Reveal";
+import RevealEditDashboard from "./pages/Dashboard/Reveal/edit";
 import HeightWeight from "./pages/Height&Weight";
 import HeightDashboard from "./pages/Dashboard/HeightDashboard";
 import WeightDashboard from "./pages/Dashboard/WeightDashboard";
@@ -37,8 +39,16 @@ const router = createBrowserRouter([
 		element: <Reveal />,
 	},
 	{
+		path: "/reveal/:id",
+		element: <RevealDetails />,
+	},
+	{
 		path: "/reveal-dashboard",
 		element: <RevealDashboard />,
+	},
+	{
+		path: "/reveal-dashboard/edit/:id",
+		element: <RevealEditDashboard />,
 	},
 	{
 		path: "/height-weight",

@@ -18,7 +18,7 @@ const Reveal = () => {
 			.then(({ data }) => {
 				if (data.msg !== "success") return setApiError(data.msg);
 
-				console.log(data.data.configs.videos, "init data");
+				// console.log(data.data.configs.videos, "init data");
 				setItems(data.data.configs.videos);
 			})
 			.catch((err) => {
@@ -111,56 +111,73 @@ const Reveal = () => {
 
 	return (
 		<>
-			<div className="h-screen p-5 bg-black">
-				<div className="grid grid-cols-4 grid-rows-2 h-full">
-					<ItemContainer
-						idx={1}
-						item={items[0]}
-						handleItemClick={handleItemClick}
-					/>
-					<ItemContainer
-						idx={2}
-						item={items[1]}
-						handleItemClick={handleItemClick}
-					/>
-					<ItemContainer
-						idx={3}
-						item={items[2]}
-						handleItemClick={handleItemClick}
-					/>
-					<ItemContainer
-						idx={4}
-						item={items[3]}
-						handleItemClick={handleItemClick}
-					/>
-					<ItemContainer
-						idx={5}
-						item={items[4]}
-						handleItemClick={handleItemClick}
-					/>
-					<ItemContainer
-						idx={6}
-						item={items[5]}
-						handleItemClick={handleItemClick}
-					/>
-					<ItemContainer
-						idx={7}
-						item={items[6]}
-						handleItemClick={handleItemClick}
-					/>
-					<ItemContainer
-						idx={8}
-						item={items[7]}
-						handleItemClick={handleItemClick}
-					/>
+			<main className="grid grid-cols-7 gap-1 grid-rows-8 bg-black h-screen">
+				<div
+					className="col-span-3 row-span-4 relative"
+					style={{
+						background: `url(${API_URL}/api/reveal/upload/${items[0].images[0].filename}) no-repeat center center/cover`,
+					}}
+				>
+					<Link
+						to={`/reveal/${items[0].id}`}
+						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
+					>
+						{items[0].name} &#187;
+					</Link>
 				</div>
-
-				<Modal
-					onClose={handleModalClose}
-					isHidden={activeItem ? false : true}
-					activeItem={activeItem}
-				/>
-			</div>
+				<div
+					className="relative col-span-3 row-span-4 col-start-1 row-start-5"
+					style={{
+						background: `url(${API_URL}/api/reveal/upload/${items[1].images[0].filename}) no-repeat center center/cover`,
+					}}
+				>
+					<Link
+						to={`/reveal/${items[1].id}`}
+						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
+					>
+						{items[1].name} &#187;
+					</Link>
+				</div>
+				<div
+					className="col-span-4 row-span-5 col-start-4 row-start-1 relative"
+					style={{
+						background: `url(${API_URL}/api/reveal/upload/${items[2].images[0].filename}) no-repeat center center/cover`,
+					}}
+				>
+					<Link
+						to={`/reveal/${items[2].id}`}
+						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
+					>
+						{items[2].name} &#187;
+					</Link>
+				</div>
+				<div
+					className="col-span-2 row-span-3 col-start-4 row-start-6 relative"
+					style={{
+						background: `url(${API_URL}/api/reveal/upload/${items[3].images[0].filename}) no-repeat center center/cover`,
+					}}
+				>
+					<Link
+						to={`/reveal/${items[3].id}`}
+						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
+					>
+						{items[3].name} &#187;
+					</Link>
+				</div>
+				<div
+					className="col-span-2 row-span-3 col-start-6 row-start-6 relative"
+					style={{
+						background: `url(${API_URL}/api/reveal/upload/${items[4].images[0].filename}) no-repeat center center/cover`,
+					}}
+				>
+					<Link
+						to={`/reveal/${items[4].id}`}
+						className="bg-red-500 text-white p-2 px-4 rounded-md bottom-2 left-2 absolute uppercase"
+					>
+						{items[4].name} &#187;
+					</Link>
+				</div>
+			</main>
 		</>
 	);
 };

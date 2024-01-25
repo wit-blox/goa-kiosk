@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
@@ -114,12 +115,28 @@ router.get("/configs", async (req, res) => {
 router.patch("/configs", async (req, res) => {
 	const configs = req.body.configs;
 
-	await db.push("/reveal-configs", configs, true);
+	await db.push(
+		"/reveal-configs",
+		{
+			videos: configs,
+		},
+		true
+	);
 	res.json({ msg: "success", data: configs });
 });
 
 router.post("/upload", upload.single("file"), async (req, res) => {
 	res.json({ msg: "success", filename: req.file.filename });
+});
+
+router.post("/upload-multiple", upload.array("files"), async (req, res) => {
+	const result = req.files.map((f) => {
+		return {
+			filename: f.filename,
+			id: uuidv4(),
+		};
+	});
+	res.json({ msg: "success", files: result });
 });
 
 router.get("/upload/:filename", async (req, res) => {

@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-# cd C:/goa-kiosk
+cd C:/goa-kiosk
 
 scriptType=$1
 
