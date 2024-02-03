@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import { API_URL } from "../configs";
 import Modal from "../components/Modal";
@@ -11,6 +11,7 @@ const Reveal = () => {
 	const [apiError, setApiError] = useState(null);
 	const [items, setItems] = useState([]);
 	const [activeItem, setActiveItem] = useState(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		axios
@@ -76,6 +77,10 @@ const Reveal = () => {
 		setActiveItem(null);
 	};
 
+	const handleNavigate = (id, pin) => {
+		navigate(`/reveal/${id}?pin=${pin}`);
+	};
+
 	if (apiError) {
 		return (
 			<div className="text-center mt-10">
@@ -118,6 +123,7 @@ const Reveal = () => {
 						background: `url(${API_URL}/api/reveal/upload/${items[0].images[0].filename}) no-repeat center center/cover`,
 						backgroundSize: "100% 100%",
 					}}
+					onClick={() => handleNavigate(items[0].id, 1)}
 				>
 					<Link
 						to={`/reveal/${items[0].id}?pin=${1}`}
@@ -132,6 +138,7 @@ const Reveal = () => {
 						background: `url(${API_URL}/api/reveal/upload/${items[1].images[0].filename}) no-repeat center center/cover`,
 						backgroundSize: "100% 100%",
 					}}
+					onClick={() => handleNavigate(items[1].id, 2)}
 				>
 					<Link
 						to={`/reveal/${items[1].id}?pin=${2}`}
@@ -146,6 +153,7 @@ const Reveal = () => {
 						background: `url(${API_URL}/api/reveal/upload/${items[2].images[0].filename}) no-repeat center center/cover`,
 						backgroundSize: "100% 100%",
 					}}
+					onClick={() => handleNavigate(items[2].id, 3)}
 				>
 					<Link
 						to={`/reveal/${items[2].id}?pin=${3}`}
@@ -160,6 +168,7 @@ const Reveal = () => {
 						background: `url(${API_URL}/api/reveal/upload/${items[3].images[0].filename}) no-repeat center center/cover`,
 						backgroundSize: "100% 100%",
 					}}
+					onClick={() => handleNavigate(items[3].id, 4)}
 				>
 					<Link
 						to={`/reveal/${items[3].id}?pin=${4}`}
@@ -174,6 +183,7 @@ const Reveal = () => {
 						background: `url(${API_URL}/api/reveal/upload/${items[4].images[0].filename}) no-repeat center center/cover`,
 						backgroundSize: "100% 100%",
 					}}
+					onClick={() => handleNavigate(items[4].id, 5)}
 				>
 					<Link
 						to={`/reveal/${items[4].id}?pin=${5}`}
@@ -188,6 +198,7 @@ const Reveal = () => {
 						background: `url(${API_URL}/api/reveal/upload/${items[5].images[0].filename}) no-repeat center center/cover`,
 						backgroundSize: "100% 100%",
 					}}
+					onClick={() => handleNavigate(items[5].id, 6)}
 				>
 					<Link
 						to={`/reveal/${items[5].id}?pin=${6}`}
@@ -202,6 +213,7 @@ const Reveal = () => {
 						background: `url(${API_URL}/api/reveal/upload/${items[6].images[0].filename}) no-repeat center center/cover`,
 						backgroundSize: "100% 100%",
 					}}
+					onClick={() => handleNavigate(items[6].id, 7)}
 				>
 					<Link
 						to={`/reveal/${items[6].id}?pin=${7}`}
