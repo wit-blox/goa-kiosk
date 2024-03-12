@@ -152,7 +152,7 @@ const HeightWeight = () => {
 								? cmToInch(measurement)
 								: parseInt(measurement)}
 							<span className="text-5xl text-gray-400">
-								{mode === "height" ? "cm" : "kg"}
+								{mode === "height" ? "inch" : "kg"}
 							</span>
 						</h1>
 					</div>
