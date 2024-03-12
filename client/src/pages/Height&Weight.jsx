@@ -95,10 +95,30 @@ const HeightWeight = () => {
 			}
 		});
 		if (found) {
+			say(`Your height is ${measurement} inches`);
 			setCurrVideo(found.video);
 			// socket.off("new-measurement");
 		}
 	};
+
+	function cmToInch(cm) {
+		const inch = cm / 2.54;
+		return Math.round(inch);
+	}
+
+	function say(text) {
+		const msg =
+			new SpeechSynthesisUtterance() || new window.SpeechSynthesisUtterance();
+		const voices = window.speechSynthesis.getVoices();
+		msg.voice = voices[10];
+		msg.voiceURI = "native";
+		msg.volume = 1;
+		msg.rate = 1;
+		msg.pitch = 0.8;
+		msg.text = text;
+		msg.lang = "en-US";
+		speechSynthesis.speak(msg);
+	}
 
 	return (
 		<div>
@@ -128,7 +148,9 @@ const HeightWeight = () => {
 				{!currVideo ? (
 					<div>
 						<h1 className="text-[20rem] mb-24">
-							{parseInt(measurement)}
+							{mode === "height"
+								? cmToInch(measurement)
+								: parseInt(measurement)}
 							<span className="text-5xl text-gray-400">
 								{mode === "height" ? "cm" : "kg"}
 							</span>
