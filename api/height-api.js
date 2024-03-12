@@ -63,7 +63,8 @@ router.get("/init", async (req, res) => {
 		});
 
 		parser.on("data", (data) => {
-			const measurement = parseInt(data);
+			let measurement = parseInt(data.split(":")[1].split(" ")[1]);
+			if (measurement < 1) measurement = 0;
 			req.io.emit("new-measurement", { measurement: measurement });
 		});
 
