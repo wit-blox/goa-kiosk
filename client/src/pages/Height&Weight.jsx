@@ -65,10 +65,10 @@ const HeightWeight = () => {
 
 		setMeasurement(newMeasurement);
 
-		if (newMeasurement === lastMeasurement.current) {
+		if (parseInt(newMeasurement) === parseInt(lastMeasurement.current)) {
 			sameMeasurementCounter.current = sameMeasurementCounter.current + 1;
 
-			if (sameMeasurementCounter.current === 15) {
+			if (sameMeasurementCounter.current === 2) {
 				// console.log("same height for ", lastMeasurement.current);
 				// timeout = setTimeout(() => {
 				displayImageFromMeasurement(lastMeasurement.current);
@@ -96,7 +96,7 @@ const HeightWeight = () => {
 		});
 		if (found) {
 			setCurrVideo(found.video);
-			socket.off("new-measurement");
+			// socket.off("new-measurement");
 		}
 	};
 
@@ -128,7 +128,7 @@ const HeightWeight = () => {
 				{!currVideo ? (
 					<div>
 						<h1 className="text-[20rem] mb-24">
-							{mode === "height" ? measurement : measurement.toFixed(2)}
+							{parseInt(measurement)}
 							<span className="text-5xl text-gray-400">
 								{mode === "height" ? "cm" : "kg"}
 							</span>
@@ -139,6 +139,12 @@ const HeightWeight = () => {
 						<img
 							src={`${API_URL}/api/${mode}/upload/${currVideo}`}
 							className="w-full h-full fixed top-0 left-0 object-contain bg-black"
+							onLoad={() => {
+								if (!currVideo) return;
+								setTimeout(() => {
+									setCurrVideo(null);
+								}, 7000);
+							}}
 						/>
 						{/* <video
 							autoPlay
