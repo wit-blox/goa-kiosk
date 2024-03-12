@@ -19,6 +19,7 @@ const AddConfig = () => {
 		appearance: "",
 		threats: "",
 		images: [],
+		finalImage: "",
 	});
 	const [initialConfigs, setInitialConfigs] = useState([]);
 
@@ -73,6 +74,31 @@ const AddConfig = () => {
 		}
 	};
 
+	const uploadFinalImage = async (e) => {
+		const files = e.target.files;
+		if (files.length === 0) return;
+
+		const formData = new FormData();
+		formData.append("file", files[0]);
+
+		try {
+			const { data } = await axios.post("/api/reveal/upload", formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			});
+
+			if (data.msg !== "success") return alert("Something went wrong");
+			console.log(data);
+			const newConfigs = { ...configData };
+			newConfigs.finalImage = data.filename;
+			// newConfigs.finalImage = [...newConfigs.images, ...data.files];
+			setConfigData(newConfigs);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const handleImageRemove = (id) => {
 		console.log(id);
 		let newConfigs = { ...configData };
@@ -107,6 +133,35 @@ const AddConfig = () => {
 					className="shadow-md shadow-gray-300 p-5 w-8/12"
 					onSubmit={handleSave}
 				>
+					<div className="mb-5">
+						<input
+							type="file"
+							multiple
+							accept="image/*"
+							onChange={uploadFinalImage}
+							hidden
+							id="finalImage"
+						/>
+
+						<label
+							htmlFor="finalImage"
+							className="bg-blue-600 text-white rounded-md px-4 py-2"
+						>
+							Upload Final Layout Image
+						</label>
+
+						<div className="flex mt-2 overflow-auto gap-1">
+							{configData.finalImage && (
+								<div className="relative">
+									<img
+										src={`${API_URL}/api/reveal/upload/${configData.finalImage}`}
+										alt="..."
+										className="w-32 h-32"
+									/>
+								</div>
+							)}
+						</div>
+					</div>
 					<div className="relative z-0 w-full mb-5 group">
 						<input
 							type="text"
@@ -296,11 +351,10 @@ const AddConfig = () => {
 
 						<div className="flex mt-2 overflow-auto gap-1">
 							{configData.images.map((image) => (
-								<div className="relative">
+								<div className="relative" key={image.id}>
 									<img
 										src={`${API_URL}/api/reveal/upload/${image.filename}`}
 										alt={image.filename}
-										key={image.id}
 										className="w-32 h-32"
 									/>
 									<button
